@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <body>
+        <div>
+            <h1>Relatório de ponto <span th:text="${user}">user</span></h1>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data e hora</th>
+                        <th>Comentários</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${records.empty}">
+                    <td colspan="2"> Nenhum registro encontrado!</td>
+                </tr>
+                <tr th:each="record : ${records}">
+                    <td><span th:text="${#temporals.format(record.dateCreated, 'dd-MM-yyyy HH:mm')}"></span></td>
+                    <td><span th:text="${record.comments}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </body>
+</head>
+</html>

@@ -1,9 +1,9 @@
 package com.fiap.hackatonsoftwarearchitecture.controllers;
 
 import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordDTO;
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.ResponseDTO;
 import com.fiap.hackatonsoftwarearchitecture.services.interfaces.PointRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +18,17 @@ public class PointRecordController {
     private PointRecordService service;
 
     @PostMapping("/register")
-    public ResponseEntity<ResponseDTO> register(@RequestBody RecordDTO record) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> register(@RequestBody RecordDTO record) {
         service.register(record);
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     @GetMapping("/records")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<RecordDTO>> getRecordsByUserId(@RequestParam Long userId,
-                                                                        @RequestParam LocalDateTime start,
-                                                                        @RequestParam LocalDateTime end) {
+                                                                @RequestParam LocalDateTime start,
+                                                                    @RequestParam LocalDateTime end) {
         List<RecordDTO> records = service.getRecordByUserId(userId, start, end);
         return ResponseEntity.ok(records);
     }

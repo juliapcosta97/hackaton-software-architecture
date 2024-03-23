@@ -15,8 +15,8 @@ public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id", nullable = false, updatable = false)
-    private Long userId;
+    @Column(name = "email", nullable = false, updatable = false)
+    private String email;
     @Column(name = "comments", nullable = false, updatable = false)
     private String comments;
     @Column(name = "date_created", nullable = false, updatable = false)
@@ -29,7 +29,7 @@ public class Record {
 
     public static Record buildEntity(RecordDTO recordDTO) {
         return Record.builder()
-                .userId(recordDTO.getUserId())
+                .email(recordDTO.getEmail())
                 .comments(recordDTO.getComments())
                 .build();
     }

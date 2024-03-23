@@ -4,7 +4,7 @@ import com.fiap.hackatonsoftwarearchitecture.repositories.entities.Record;
 
 import java.util.List;
 
-public record EmailDto(
+public record EmailDTO(
         String recipient,
         String subject,
         List<Record> content

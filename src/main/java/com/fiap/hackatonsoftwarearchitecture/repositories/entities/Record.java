@@ -2,8 +2,10 @@ package com.fiap.hackatonsoftwarearchitecture.repositories.entities;
 
 import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordDTO;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -11,12 +13,14 @@ import java.time.LocalDateTime;
 @Table(name = "record")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Record {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "user_id", nullable = false, updatable = false)
-    private Long userId;
+    @Column(name = "email", nullable = false, updatable = false)
+    private String email;
     @Column(name = "comments", nullable = false, updatable = false)
     private String comments;
     @Column(name = "date_created", nullable = false, updatable = false)
@@ -29,7 +33,7 @@ public class Record {
 
     public static Record buildEntity(RecordDTO recordDTO) {
         return Record.builder()
-                .userId(recordDTO.getUserId())
+                .email(recordDTO.getEmail())
                 .comments(recordDTO.getComments())
                 .build();
     }

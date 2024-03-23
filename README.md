@@ -1,6 +1,6 @@
-# hackaton-software-architecture
+## Hackaton Software Architecture
 
-[Pos_tech_-_Hackaton_SOAT.pdf](https://github.com/juliapcosta97/hackaton-software-architecture/files/14643674/Pos_tech_-_Hackaton_SOAT.pdf)
+[Documento_Pos_tech_-_Hackaton_SOAT.pdf](https://github.com/juliapcosta97/hackaton-software-architecture/files/14643674/Pos_tech_-_Hackaton_SOAT.pdf)
 
 ### MVP Ponto Eletrônico 
 
@@ -22,8 +22,10 @@ de resposta dos serviços de marcação de ponto deve ser de até 5 segundos.
 
 ### Exemplos:
 
-#### - Salvar Registro de Ponto
+#### - Salvar Registro de Ponto 
+Registra email, comentário, data e hora do evento.
 
+```
 curl --location 'http://localhost:8080/point/register' \
 --header 'Content-Type: application/json' \
 --header 'Cookie: JSESSIONID=C19FB1413873565215FFED730B66D3EE' \
@@ -31,39 +33,49 @@ curl --location 'http://localhost:8080/point/register' \
     "email": "test@email.com",
     "comments": "horario de entrada"
 }'
+```
 
 ![Captura de Tela 2024-03-23 às 19 32 20](https://github.com/juliapcosta97/hackaton-software-architecture/assets/15149920/3b2a24b8-e840-4373-af46-2812824310c5)
 
 #### - Visualizar Registros
+Carrega uma lista com todos os registros filtrados por email e data.
 
+```
 curl --location --request GET 'https://yh5mvo2tnd.execute-api.us-east-1.amazonaws.com/tech-challenge/point/records?email=test%40email.com&date=2024-03-23' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "test@email.com",
     "comments": "horario de saida"
 }'
+```
 
 ![Captura de Tela 2024-03-23 às 19 33 14](https://github.com/juliapcosta97/hackaton-software-architecture/assets/15149920/e9623f12-4bf3-4e1a-a06e-00b523c2c512)
 
 #### - Relatório Diário do Ponto Eletrônico
+Carrega as informações detalhadas das batidas de ponto com total de horas trabalhadas e todos os registros filtrados por email e data.
 
+```
 curl --location --request GET 'https://yh5mvo2tnd.execute-api.us-east-1.amazonaws.com/tech-challenge/point/report/daily?email=test%40email.com&date=2024-03-23' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "test@email.com",
     "comments": "horario de saida"
 }'
+```
 
 ![Captura de Tela 2024-03-23 às 19 34 08](https://github.com/juliapcosta97/hackaton-software-architecture/assets/15149920/c52339cb-37e4-4ea5-aeba-3ac0b7c33749)
 
 #### - Relatório Mensal e Espelho de Ponto
+Carrega as informações detalhadas e espelho de ponto com total de horas trabalhadas e todos os registros do mes filtrados por email. 
 
+```
 curl --location --request GET 'https://yh5mvo2tnd.execute-api.us-east-1.amazonaws.com/tech-challenge/point/report/monthly?email=test%40email.com&date=2024-03-23' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "email": "test@email.com",
     "comments": "horario de saida"
 }'
+```
 
 ![Captura de Tela 2024-03-23 às 19 34 48](https://github.com/juliapcosta97/hackaton-software-architecture/assets/15149920/5c69cdcf-4d7c-41c7-a57c-17341c8a8851)
 

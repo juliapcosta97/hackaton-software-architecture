@@ -13,7 +13,7 @@ build/
 out/
 
 # Arquivos de configuração
-#application.properties
+#application-local.properties
 #application.yml
 #application-dev.properties
 #application-dev.yml

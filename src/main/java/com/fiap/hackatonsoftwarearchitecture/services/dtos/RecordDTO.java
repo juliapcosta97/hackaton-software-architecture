@@ -9,7 +9,7 @@ import lombok.*;
 public class RecordDTO {
 
     @NonNull
-    @JsonProperty("user_id")
-    private Long userId;
+    @JsonProperty("email")
+    private String email;
     private String comments;
 }

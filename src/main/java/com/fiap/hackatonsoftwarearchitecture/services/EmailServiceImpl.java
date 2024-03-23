@@ -1,6 +1,6 @@
 package com.fiap.hackatonsoftwarearchitecture.services;
 
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.EmailDto;
+import com.fiap.hackatonsoftwarearchitecture.services.dtos.EmailDTO;
 import com.fiap.hackatonsoftwarearchitecture.services.interfaces.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     @Async
-    public void sendEmail(EmailDto emailDto) {
+    public void sendEmail(EmailDTO emailDto) {
         log.info("Enviando email com assunto {} para {}", emailDto.subject(),emailDto.recipient());
 
         try{
@@ -48,7 +48,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
-    private String createBodyAsHtml(EmailDto emailDto) {
+    private String createBodyAsHtml(EmailDTO emailDto) {
         var ctx = new Context(new Locale("pt", "BR"), Map.of("records", emailDto.content(), "user", emailDto.recipient()));
         return engine.process(templatePath, ctx);
     }

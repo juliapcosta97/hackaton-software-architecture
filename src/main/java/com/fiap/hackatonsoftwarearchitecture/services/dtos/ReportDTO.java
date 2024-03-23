@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DailyReportDTO {
+public class ReportDTO {
 
     @JsonProperty("entry_hour")
     private LocalDateTime entryHour;

@@ -1,6 +1,6 @@
-## Hackaton Software Architecture
+## Hackathon Software Architecture
 
-[Documento_Pos_tech_-_Hackaton_SOAT.pdf](https://github.com/juliapcosta97/hackaton-software-architecture/files/14643674/Pos_tech_-_Hackaton_SOAT.pdf)
+[Documento_Pos_tech_-_Hackathon_SOAT.pdf](https://github.com/juliapcosta97/hackaton-software-architecture/files/14643674/Pos_tech_-_Hackaton_SOAT.pdf)
 
 ### MVP Ponto Eletrônico 
 

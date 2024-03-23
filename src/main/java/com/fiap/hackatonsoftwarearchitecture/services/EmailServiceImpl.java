@@ -49,7 +49,11 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private String createBodyAsHtml(EmailDTO emailDto) {
-        var ctx = new Context(new Locale("pt", "BR"), Map.of("records", emailDto.content(), "user", emailDto.recipient()));
+        var ctx = new Context(new Locale("pt", "BR"),
+                Map.of("records", emailDto.content(),
+                        "user", emailDto.recipient(),
+                        "totalHoursWorkedByMonth", emailDto.totalHoursWorkedByMonth()
+                ));
         return engine.process(templatePath, ctx);
     }
 }

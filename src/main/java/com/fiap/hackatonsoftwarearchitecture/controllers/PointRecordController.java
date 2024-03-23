@@ -62,4 +62,11 @@ public class PointRecordController {
         List<RecordViewDTO> records = service.getRecordsByEmailAndDate(email, date);
         return ResponseEntity.ok(records);
     }
+
+    @GetMapping("/report/monthly/email")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void sendEmailReportMonthlyByEmailAndDate(@RequestParam String email,
+                                                                           @RequestParam LocalDate date) {
+        service.sendReportEmail(email, date);
+    }
 }

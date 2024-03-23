@@ -2,12 +2,11 @@ package com.fiap.hackatonsoftwarearchitecture.services;
 
 import com.fiap.hackatonsoftwarearchitecture.repositories.PointRecordRepository;
 import com.fiap.hackatonsoftwarearchitecture.repositories.entities.Record;
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordDTO;
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordViewDTO;
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.ReportDailyDTO;
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.ReportMonthlyDTO;
+import com.fiap.hackatonsoftwarearchitecture.services.dtos.*;
+import com.fiap.hackatonsoftwarearchitecture.services.interfaces.EmailService;
 import com.fiap.hackatonsoftwarearchitecture.services.interfaces.PointRecordService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +20,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor
 public class PointRecordServiceImp implements PointRecordService {
 
-    private PointRecordRepository repository;
+    private final PointRecordRepository repository;
+    private final EmailService emailService;
 
     @Override
     public void register(RecordDTO recordDTO) {
@@ -66,6 +66,17 @@ public class PointRecordServiceImp implements PointRecordService {
         });
 
         return recordDetaiList;
+    }
+
+    @Override
+    public void sendReportEmail(String email, LocalDate date) {
+        var reportData = getReportCurrentMonthly(email, date.getMonthValue(), date.getYear());
+        emailService.sendEmail(EmailDTO.builder()
+                        .subject("Relatório de ponto")
+                        .totalHoursWorkedByMonth(reportData.getTotalHoursWorkedByMonth())
+                        .recipient(email)
+                        .content(reportData.getRecords())
+                .build());
     }
 
     private ReportMonthlyDTO generateReportMonthly(String email, LocalDateTime startOfDay, LocalDateTime endOfDay) {

@@ -5,8 +5,14 @@
     <body>
         <div>
             <h1>Relatório de ponto <span th:text="${user}">user</span></h1>
+            <br>
+            <h4>Total de horas trabalhadas: <span th:text="${totalHoursWorkedByMonth}">totalHoursWorkedByMonth</span></h4>
         </div>
-        <div>
+        <div th:if="${records.empty}">
+            <span> Nenhum registro encontrado!</span>
+        </div>
+        <div th:each="record : ${records}">
+            <h3>Dia: <span th:text="${#temporals.format(record.date, 'dd-MM-yyyy')}"></span></h3>
             <table>
                 <thead>
                     <tr>
@@ -15,12 +21,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                <tr th:if="${records.empty}">
+                <tr th:if="${record.recordPoints.empty}">
                     <td colspan="2"> Nenhum registro encontrado!</td>
                 </tr>
-                <tr th:each="record : ${records}">
-                    <td><span th:text="${#temporals.format(record.dateCreated, 'dd-MM-yyyy HH:mm')}"></span></td>
-                    <td><span th:text="${record.comments}"></span></td>
+                <tr th:each="point : ${record.recordPoints}">
+                    <td><span th:text="${#temporals.format(point.recordTime, 'dd-MM-yyyy HH:mm')}"></span></td>
+                    <td><span th:text="${point.comments}"></span></td>
                 </tr>
                 </tbody>
             </table>

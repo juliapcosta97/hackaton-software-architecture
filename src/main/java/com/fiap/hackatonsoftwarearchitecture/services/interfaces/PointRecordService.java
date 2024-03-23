@@ -16,4 +16,6 @@ public interface PointRecordService {
     ReportDailyDTO getReportDailyByEmailAndDate(String email, LocalDate date);
     List<RecordViewDTO> getRecordsByEmailAndDate(String email, LocalDate date);
     ReportMonthlyDTO getReportCurrentMonthly(String email, int month, int year);
+
+    void sendReportEmail(String email, LocalDate date);
 }

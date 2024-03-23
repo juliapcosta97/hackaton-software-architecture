@@ -7,7 +7,9 @@ import com.fiap.hackatonsoftwarearchitecture.services.interfaces.EmailService;
 import com.fiap.hackatonsoftwarearchitecture.services.interfaces.PointRecordService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PointRecordServiceImp implements PointRecordService {
 
     private final PointRecordRepository repository;
@@ -29,15 +32,19 @@ public class PointRecordServiceImp implements PointRecordService {
     @Override
     public void register(RecordDTO recordDTO) {
         Record recordEntity = Record.buildEntity(recordDTO);
+        log.info("Inserindo novo registro e ponto {}", recordEntity);
         repository.save(recordEntity);
+        log.info("Registro de ponto inserido com sucesso {}", recordEntity);
     }
 
     @Override
     public ReportDailyDTO getReportDailyByEmailAndDate(String email, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(23, 59, 59);
-
-        return generateReportDaily(email, startOfDay, endOfDay);
+        log.info("Consultando relatorio de ponto do dia {}", date);
+        var response = generateReportDaily(email, startOfDay, endOfDay);
+        log.info("Relatorio de ponto do dia {} consultado com sucesso", date);
+        return response;
     }
 
     @Override
@@ -48,8 +55,12 @@ public class PointRecordServiceImp implements PointRecordService {
 
         LocalDateTime startOfMonth = startDate.atStartOfDay();
         LocalDateTime endOfMonth = endDate.atTime(23, 59, 59);
+        log.info("Consultando relatorio de ponto do mes {}", month);
 
-        return generateReportMonthly(email, startOfMonth, endOfMonth);
+        var response = generateReportMonthly(email, startOfMonth, endOfMonth);
+        log.info("Relatorio de ponto do mes {} consultado com sucesso", month);
+
+        return response;
     }
 
     @Override
@@ -69,6 +80,7 @@ public class PointRecordServiceImp implements PointRecordService {
     }
 
     @Override
+    @Async
     public void sendReportEmail(String email, LocalDate date) {
         var reportData = getReportCurrentMonthly(email, date.getMonthValue(), date.getYear());
         emailService.sendEmail(EmailDTO.builder()

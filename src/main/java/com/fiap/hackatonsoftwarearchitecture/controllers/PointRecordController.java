@@ -24,15 +24,14 @@ public class PointRecordController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> register(@RequestBody RecordDTO record) {
+    public void register(@RequestBody RecordDTO record) {
         service.register(record);
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
     @GetMapping("/report/daily")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReportDailyDTO> getReportDailyByEmailAndDate(@RequestParam String email,
-                                                                       @RequestParam LocalDate date) {
+    public ResponseEntity<ReportDailyDTO> getReportDailyByEmailAndDate(@RequestParam("email") String email,
+                                                                       @RequestParam("date") LocalDate date) {
         ReportDailyDTO report = service.getReportDailyByEmailAndDate(email, date);
 
         if(isNull(report)) {
@@ -44,8 +43,8 @@ public class PointRecordController {
 
     @GetMapping("/report/monthly")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReportMonthlyDTO> getReportMonthlyByEmailAndDate(@RequestParam String email,
-                                                                         @RequestParam LocalDate date) {
+    public ResponseEntity<ReportMonthlyDTO> getReportMonthlyByEmailAndDate(@RequestParam("email") String email,
+                                                                           @RequestParam("date") LocalDate date) {
         ReportMonthlyDTO report = service.getReportCurrentMonthly(email, date.getMonth().getValue(), date.getYear());
 
         if(isNull(report)) {
@@ -57,16 +56,16 @@ public class PointRecordController {
 
     @GetMapping("/records")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<RecordViewDTO>> getRecordsByEmailAndDate(@RequestParam String email,
-                                                                @RequestParam LocalDate date) {
+    public ResponseEntity<List<RecordViewDTO>> getRecordsByEmailAndDate(@RequestParam("email") String email,
+                                                                        @RequestParam("date") LocalDate date) {
         List<RecordViewDTO> records = service.getRecordsByEmailAndDate(email, date);
         return ResponseEntity.ok(records);
     }
 
     @GetMapping("/report/monthly/email")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void sendEmailReportMonthlyByEmailAndDate(@RequestParam String email,
-                                                                           @RequestParam LocalDate date) {
+    public void sendEmailReportMonthlyByEmailAndDate(@RequestParam("email") String email,
+                                                     @RequestParam("date") LocalDate date) {
         service.sendReportEmail(email, date);
     }
 }

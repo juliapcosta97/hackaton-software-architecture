@@ -1,8 +1,9 @@
 package com.fiap.hackatonsoftwarearchitecture.controllers;
 
-import com.fiap.hackatonsoftwarearchitecture.services.dtos.ReportDTO;
+import com.fiap.hackatonsoftwarearchitecture.services.dtos.ReportDailyDTO;
 import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordDTO;
 import com.fiap.hackatonsoftwarearchitecture.services.dtos.RecordViewDTO;
+import com.fiap.hackatonsoftwarearchitecture.services.dtos.ReportMonthlyDTO;
 import com.fiap.hackatonsoftwarearchitecture.services.interfaces.PointRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,9 +31,9 @@ public class PointRecordController {
 
     @GetMapping("/report/daily")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReportDTO> getReportDailyByEmailAndDate(@RequestParam String email,
-                                                                  @RequestParam LocalDate date) {
-        ReportDTO report = service.getReportDailyByEmailAndDate(email, date);
+    public ResponseEntity<ReportDailyDTO> getReportDailyByEmailAndDate(@RequestParam String email,
+                                                                       @RequestParam LocalDate date) {
+        ReportDailyDTO report = service.getReportDailyByEmailAndDate(email, date);
 
         if(isNull(report)) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -43,9 +44,9 @@ public class PointRecordController {
 
     @GetMapping("/report/monthly")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<ReportDTO> getReportMonthlyByEmailAndDate(@RequestParam String email,
-                                                                  @RequestParam LocalDate date) {
-        ReportDTO report = service.getReportCurrentMonthly(email, date.getMonth().getValue(), date.getYear());
+    public ResponseEntity<ReportMonthlyDTO> getReportMonthlyByEmailAndDate(@RequestParam String email,
+                                                                         @RequestParam LocalDate date) {
+        ReportMonthlyDTO report = service.getReportCurrentMonthly(email, date.getMonth().getValue(), date.getYear());
 
         if(isNull(report)) {
             return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);

@@ -1,6 +1,6 @@
 package com.fiap.hackatonsoftwarearchitecture.services.dtos;
 
-import jakarta.persistence.Column;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,10 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecordDetailDTO {
-
-    @Column(name = "comments", nullable = false, updatable = false)
+public class RecordViewDTO {
     private String comments;
-    @Column(name = "date_created", nullable = false, updatable = false)
+    @JsonProperty("date_created")
     private LocalDateTime dateCreated;
 }

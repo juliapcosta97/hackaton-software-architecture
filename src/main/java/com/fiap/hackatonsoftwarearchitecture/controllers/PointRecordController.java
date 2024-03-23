@@ -41,6 +41,19 @@ public class PointRecordController {
         return ResponseEntity.ok(report);
     }
 
+    @GetMapping("/report/monthly")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<ReportDTO> getReportMonthlyByEmailAndDate(@RequestParam String email,
+                                                                  @RequestParam LocalDate date) {
+        ReportDTO report = service.getReportCurrentMonthly(email, date.getMonth().getValue(), date.getYear());
+
+        if(isNull(report)) {
+            return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+
+        return ResponseEntity.ok(report);
+    }
+
     @GetMapping("/records")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<RecordViewDTO>> getRecordsByEmailAndDate(@RequestParam String email,

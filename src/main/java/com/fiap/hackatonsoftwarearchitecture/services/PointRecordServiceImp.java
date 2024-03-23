@@ -114,7 +114,7 @@ public class PointRecordServiceImp implements PointRecordService {
         for (ReportDTO.Break aBreak : dailyReport.getBreaks()) {
             totalHours = totalHours.plus(Duration.between(aBreak.getStart(), aBreak.getEnd()));
         }
-        dailyReport.setTotalHoursWorked(totalHours);
+        dailyReport.setTotalHoursWorked(totalHours.toHours());
     }
 }
 

@@ -21,7 +21,7 @@ public class ReportDTO {
     private LocalDateTime exitHour;
     private List<Break> breaks = new ArrayList<>();
     @JsonProperty("total_hours_worked")
-    private Duration totalHoursWorked;
+    private Long totalHoursWorked;
 
     @Data
     @AllArgsConstructor
